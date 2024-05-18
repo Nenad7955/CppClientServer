@@ -10,10 +10,12 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 
 #ifdef _WIN32
+#define customsize int
 #include <winsock2.h>
 #pragma comment(lib, "ws2_32.lib")
 #define close closesocket
 #else
+#define customsize unsigned int
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <unistd.h>

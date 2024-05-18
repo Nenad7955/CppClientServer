@@ -35,8 +35,8 @@ int main() {
 
     // Connect to the server
     if (connect(clientSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) == -1) {
-        cout << "Error connecting to server: " << WSAGetLastError() << endl;
-        closesocket(clientSocket);
+        cout << "Error connecting to server: " << endl;
+        close(clientSocket);
         return 1;
     }
 
@@ -54,7 +54,7 @@ int main() {
             break;
         }
         else if (bytesReceived == -1) {
-            cout << "Error receiving data from server: " << WSAGetLastError() << endl;
+            cout << "Error receiving data from server: " << endl;
             break;
         }
 
@@ -64,7 +64,7 @@ int main() {
     }
 
     // Close the socket
-    closesocket(clientSocket);
+    close(clientSocket);
 
 #ifdef _WIN32
     WSACleanup();

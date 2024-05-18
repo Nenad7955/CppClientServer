@@ -64,7 +64,7 @@ int main() {
     serverAddress.sin_port = htons(PORT);
 
     // Bind the socket to the address
-    if (bind(serverSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) == -1) {
+    if (::bind(serverSocket, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) == -1) {
         cout << "Error binding socket: " << errno << endl;
         return 1;
     }
@@ -78,15 +78,15 @@ int main() {
     cout << "Server started on port " << PORT << endl;
 
     // Thread to send messages to clients periodically
-    thread messageThread([&]() {
-        my_server_code();
-    });
+    thread messageThread(my_server_code);
 
     // Accept incoming connections in a loop
     while (true) {
         struct sockaddr_in clientAddress;
-        int clientAddressSize = sizeof(clientAddress);
-        int clientSocket = accept(serverSocket, (struct sockaddr*)&clientAddress, &clientAddressSize);
+
+        customsize clientAddressSize = sizeof(clientAddress);
+        int clientSocket = ::accept(serverSocket, (struct sockaddr*)&clientAddress, &clientAddressSize);
+        
         if (clientSocket == -1) {
             cout << "Error accepting connection: " << errno << endl;
             continue;
