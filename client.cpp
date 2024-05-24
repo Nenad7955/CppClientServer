@@ -59,8 +59,7 @@ int main() {
         }
 
         // Print received message
-        //cout << "Server message: " << string(buffer, bytesReceived) << endl;
-        recvFromServer(buffer);;
+        recvFromServer(string(buffer, bytesReceived));
     }
 
     // Close the socket
